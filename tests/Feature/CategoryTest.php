@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,14 +13,22 @@ class CategoryTest extends TestCase
     public function test_get_category_list()
     {
         //prepare
-        //$this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
+        Category::create([
+            "name"=>"test",
+            "slug"=>"slug"
+        ]);
+        Category::create([
+            "name"=>"test2",
+            "slug"=>"slug2"
+        ]);
 
         //action
         $response = $this->getJson(route('api.category.index'));
-
+        //dd($response->json()["data"]);
 
         //assertion
-        $this->assertEquals(1,count($response->json()));
+        $this->assertEquals(2,count($response->json()["data"]));
 
     }
 }
