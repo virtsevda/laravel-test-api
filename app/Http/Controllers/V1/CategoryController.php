@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryCollection;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,9 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $result = Category::all();
 
-        return response()->json(['result'=>""]);
+        return new CategoryCollection($result);
     }
 
     /**
