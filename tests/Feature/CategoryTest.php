@@ -14,21 +14,25 @@ class CategoryTest extends TestCase
     {
         //prepare
         $this->withoutExceptionHandling();
-        Category::create([
-            "name"=>"test",
-            "slug"=>"slug"
-        ]);
-        Category::create([
-            "name"=>"test2",
-            "slug"=>"slug2"
-        ]);
+        Category::factory()->create();
 
         //action
         $response = $this->getJson(route('api.category.index'));
         //dd($response->json()["data"]);
 
         //assertion
-        $this->assertEquals(2,count($response->json()["data"]));
+        $this->assertEquals(1,count($response->json()["data"]));
+    }
 
+    public function test_single_category()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->getJson(route('api.category.show',$category->id))
+                    ->assertOk()
+                    ->json();
+
+        $this->assertEquals($response['result']['name'],$category->name);
+        $this->assertEquals($response['result']['slug'],$category->slug);
     }
 }

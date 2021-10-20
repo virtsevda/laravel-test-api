@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -40,7 +41,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+
+        return new CategoryResource(Category::find($id));
     }
 
     /**
